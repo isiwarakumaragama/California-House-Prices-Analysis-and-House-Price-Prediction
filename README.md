@@ -90,16 +90,10 @@ Through exploratory data analysis, the following key insights were discovered:
 
 ## 📈 Visualizations
 
-The analysis produces the following key visualizations saved in the `outputs/` folder:
-
-### Generated Output Visualizations
-
-The analysis produces the following key visualizations saved in the `outputs/` folder:
-
 #### 1. Distribution of Median House Values
 Shows the distribution of house prices in the dataset after cleaning and outlier removal. This histogram with KDE overlay reveals that house prices follow a somewhat right-skewed distribution, with most properties valued between $100k-$500k.
 
-**File**: `Distribution of Median House Values.png`
+![Distribution of Median House Values](outputs/Distribution%20of%20Median%20House%20Values.png)
 
 #### 2. Correlation Heatmap of Housing Data
 A comprehensive correlation matrix showing how each feature relates to others. Key findings:
@@ -109,12 +103,12 @@ A comprehensive correlation matrix showing how each feature relates to others. K
 - **Multicollinearity**: Total rooms, population, and households show high intercorrelation
 - **Population**: Moderate correlation with prices (0.20)
 
-**File**: `Correlation Heatmap of Housing Data.png`
+![Correlation Heatmap of Housing Data](outputs/Correlation%20Heatmap%20of%20Housing%20Data.png)
 
 #### 3. Outlier Analysis in Median Income
 Box plot visualization showing the distribution of median income values and identifying statistical outliers using the IQR (Interquartile Range) method. This helps ensure the model trains on clean, representative data without extreme values skewing results.
 
-**File**: `Outlier Analysis in Median Income.png`
+![Outlier Analysis in Median Income](outputs/Outlier%20Analysis%20in%20Median%20Income.png)
 
 ### Data Processing Summary
 
