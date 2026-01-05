@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import joblib
 import numpy as np
+import pandas as pd
 import statsmodels.api as sm
 from flask_cors import CORS
 import os
@@ -121,22 +122,32 @@ def predict():
 
         data = request.json
         features = validate_input(data)
+        
+        # Define feature names in the correct order
+        feature_names = [
+            "longitude", "latitude", "housing_median_age", "total_rooms",
+            "population", "households", "median_income",
+            "ocean_proximity_<1H OCEAN", "ocean_proximity_INLAND",
+            "ocean_proximity_NEAR BAY", "ocean_proximity_NEAR OCEAN"
+        ]
+        
+        # Convert to DataFrame with proper column names (model was trained with named features)
+        features_df = pd.DataFrame([features], columns=feature_names)
 
-        # Convert features to numpy and add constant
-        features = np.array(features).reshape(1, -1)
-        features_const = sm.add_constant(features, has_constant='add')
-
-        prediction = model.predict(features_const)[0]
+        prediction = model.predict(features_df)[0][0]
         return jsonify({
             "status": "success",
-            "predicted_price": round(prediction, 2),
+            "predicted_price": round(float(prediction), 2),
             "units": "USD"
         })
 
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": "An unexpected error occurred. Please try again later."}), 500
+        print(f"Prediction error: {type(e).__name__}: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": f"Error: {str(e)}"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
